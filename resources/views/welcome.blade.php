@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
   <a href="{{ route('register') }}">register</a>
   <a href="{{ route('login') }}">login</a>
 </body>

@@ -15,6 +15,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
+                        {{ __('Listes des clients') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
+                        {{ __('Listes des factures (à faire)') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -35,8 +42,20 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Profil') }}
                         </x-dropdown-link>
+
+                         <!-- Crete client -->
+
+                         <x-dropdown-link :href="route('client.create')">
+                            {{ __('Créer un nouveau client') }}
+                        </x-dropdown-link>
+                         <!-- Crete client -->
+
+                         <x-dropdown-link :href="route('clients.index')">
+                            {{ __('Voir les listes des clients') }}
+                        </x-dropdown-link>
+                       
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -45,7 +64,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Se déconnecter') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -81,7 +100,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profil') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -91,7 +110,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Se déconnecter') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
