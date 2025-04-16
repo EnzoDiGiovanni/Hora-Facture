@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Invoice;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('invoices_line', function (Blueprint $table) {
             $table->id();
-            $table->string('bussiness_name');
-            $table->string('email')->unique();
-            $table->text('ical_url');
-            $table->foreignIdFor(User::class)->constrained();
+            $table->string('title');
+            $table->string('description');
+            $table->decimal('unit_price', 10, 2);
+            $table->integer('amount');
+            $table->decimal('vat_rate', 10, 2);
+            $table->foreignIdFor(Invoice::class);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('invoices_line');
     }
 };
