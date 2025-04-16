@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -12,7 +14,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+
+        $clients = Client::where('user_id', Auth::id())->get();
         return view('client.index', compact('clients'));
     }
 
@@ -21,6 +24,7 @@ class ClientController extends Controller
      */
     public function create()
     {
+
         return view('client.create');
     }
 
@@ -32,8 +36,12 @@ class ClientController extends Controller
         $validated = $request->validate([
             'bussiness_name' => 'required|string|max:255',
             'email' => 'required|string|max:255',
-            'ical_url' => 'required|string|max:255',
+            'ical_url' => 'required|string',
+            'hourly_rate' => 'required|numeric|min:0',
+
         ]);
+
+        $validated['user_id'] = Auth::user()->id;
 
         Client::create($validated);
 
