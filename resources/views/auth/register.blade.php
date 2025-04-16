@@ -26,13 +26,7 @@
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
-        <!-- VAT Number -->
-        <div class="mt-4">
-            <x-input-label for="vat_number" :value="__('Vat_number')" />
-            <x-text-input id="vat_number" class="block mt-1 w-full" type="vat_number" name="vat_number"
-                :value="old('vat_number')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('vat_number')" class="mt-2" />
-        </div>
+
 
         <!-- Password -->
         <div class="mt-4">

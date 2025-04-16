@@ -18,9 +18,10 @@
                     <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
                         {{ __('Listes des clients') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
-                        {{ __('Listes des factures (à faire)') }}
+                    <x-nav-link :href="route('invoice.index')" :active="request()->routeIs('invoice.index')">
+                        {{ __('Listes des factures') }}
                     </x-nav-link>
+                 
 
                 </div>
             </div>
@@ -45,15 +46,17 @@
                             {{ __('Profil') }}
                         </x-dropdown-link>
 
-                         <!-- Crete client -->
+                         <!-- Create client -->
 
                          <x-dropdown-link :href="route('client.create')">
                             {{ __('Créer un nouveau client') }}
                         </x-dropdown-link>
-                         <!-- Crete client -->
+                       
 
-                         <x-dropdown-link :href="route('clients.index')">
-                            {{ __('Voir les listes des clients') }}
+                         <!-- Créer une facture client -->
+
+                         <x-dropdown-link :href="route('invoice.create')">
+                            {{ __('Créer une facture') }}
                         </x-dropdown-link>
                        
 

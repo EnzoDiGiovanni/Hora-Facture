@@ -5,12 +5,18 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Dashboard') }}
             </h2>
-            <a href="{{ route('client.create') }}"
-                class="font-semibold text-xl text-gray-800 dark:text-gray-200  border rounded-lg p-2 hover:bg-black">Créer
-                un
-                nouveau
-                client</a>
+            <div>
 
+                <a href="{{ route('client.create') }}"
+                    class="transition font-semibold text-sm text-gray-800 dark:text-gray-200  border rounded-lg p-2 hover:bg-black hover:text-gray-300">Créer
+                    un
+                    nouveau
+                    client</a>
+                <a href="{{ route('invoice.create') }}"
+                    class="transition font-semibold text-sm text-gray-800 dark:text-gray-200  border rounded-lg p-2 hover:bg-black hover:text-gray-300">Créer
+                    une nouvelle facture</a>
+
+            </div>
         </div>
     </x-slot>
 
