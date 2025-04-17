@@ -16,7 +16,7 @@ class ClientController extends Controller
     {
 
         $clients = Client::where('user_id', Auth::id())->get();
-        return view('client.index', compact('clients'));
+        return view('client.index', ['clients' => $clients]);
     }
 
     /**
@@ -36,7 +36,7 @@ class ClientController extends Controller
         $validated = $request->validate([
             'bussiness_name' => 'required|string|max:255',
             'email' => 'required|string|max:255',
-            'ical_url' => 'required|string',
+            'ical_url' => 'required|url',
             'hourly_rate' => 'required|numeric|min:0',
 
         ]);
@@ -61,7 +61,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('client.edit', ['client' => $client]);
     }
 
     /**
@@ -69,7 +69,16 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $validated = $request->validate([
+            'bussiness_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'ical_url' => 'required|string',
+            'hourly_rate' => 'nullable|numeric|min:0',
+        ]);
+
+        $client->update($validated);
+
+        return redirect()->route('clients.index')->with('success', 'Client mis à jour avec succès.');
     }
 
     /**

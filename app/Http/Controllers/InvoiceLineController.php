@@ -60,6 +60,9 @@ class InvoiceLineController extends Controller
      */
     public function destroy(InvoiceLine $invoiceLine)
     {
-        //
+        $invoiceId = $invoiceLine->invoice_id;
+        $invoiceLine->delete();
+
+        return redirect()->route('invoice.show', ['invoice' => $invoiceId])->with('success', 'Ligne supprimée.');
     }
 }
