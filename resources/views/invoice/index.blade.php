@@ -15,7 +15,7 @@
       <div class="bg-white dark:bg-gray-900 shadow sm:rounded-lg p-6">
         @forelse ($invoices as $invoice)
       <div
-        class="mb-6 p-4 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm flex justify-between items-start">
+        class="mb-6 p-4 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm flex justify-between items-center">
         <div class="space-y-1 break-words">
         <a href="{{ route('invoice.show', $invoice->id) }}"
           class="text-lg text-teal-600 dark:text-teal-400 font-semibold hover:underline">
@@ -29,14 +29,23 @@
         </p>
         </div>
 
+        <div>
+
+        <a href="{{ route('invoice.edit', $invoice->id) }}"
+          class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+          Modifier
+        </a>
+
         <form action="{{ route('invoice.destroy', $invoice->id) }}" method="POST"
-        onsubmit="return confirm('Supprimer cette facture ?');">
-        @csrf
-        @method('DELETE')
-        <button class="text-sm text-red-600 hover:text-red-700 hover:underline font-medium">
+          onsubmit="return confirm('Supprimer cette facture ?');">
+          @csrf
+          @method('DELETE')
+          <button
+          class="inline-flex items-center px-4 py-2 bg-red-600 dark:bg-red-400 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-900 uppercase tracking-widest hover:bg-red-700 dark:hover:bg-red-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition">
           Supprimer
-        </button>
+          </button>
         </form>
+        </div>
       </div>
     @empty
     <p class="text-gray-600 dark:text-gray-300">Aucune facture trouvée.</p>
