@@ -44,8 +44,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $clientsNames = Client::pluck('bussiness_name', 'id');
-
+        $clientsNames = Client::where('user_id', Auth::id())->pluck('bussiness_name', 'id');
         return view('invoice.create', ['clientsNames' => $clientsNames]);
     }
 
@@ -56,17 +55,16 @@ class InvoiceController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'payments_terms' => 'required|string|max:255',
             'client_id' => 'required|exists:clients,id',
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start',
+            'notes' => 'nullable|string|max:1000',
+
         ]);
 
         $validated['user_id'] = Auth::id();
 
-
         $invoice = Invoice::create($validated);
-
 
         $client = Client::findOrFail($validated['client_id']);
 
@@ -86,8 +84,6 @@ class InvoiceController extends Controller
 
 
                 $eventStart = new \DateTime($event['start']);
-                dump('ligne ajoutée');
-
 
                 if ($eventStart < $startDate || $eventStart > $endDate) {
                     continue;
@@ -104,7 +100,7 @@ class InvoiceController extends Controller
             }
         }
 
-        return redirect()->route('invoice.index')->with('success', 'Facture générée automatiquement à partir du calendrier.');
+        return redirect()->route('invoice.show', $invoice->id)->with('success', 'Facture générée automatiquement à partir du calendrier.');
     }
 
     /**
@@ -127,13 +123,13 @@ class InvoiceController extends Controller
 
         return view(
             'invoice.show',
-            compact(
-                'invoice',
-                'lines',
-                'totalHT',
-                'totalTVA',
-                'totalTTC'
-            )
+            [
+                'lines' => $lines,
+                'totalHT' => $totalHT,
+                'totalTVA' => $totalTVA,
+                'totalTTC' => $totalTTC,
+                'invoice' => $invoice
+            ]
         );
     }
 
@@ -142,7 +138,11 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        abort_if($invoice->user_id !== Auth::id(), 403);
+
+        $clients = Client::where('user_id', Auth::id())->get();
+
+        return view('invoice.edit', ['invoice' => $invoice, 'clients' => $clients]);
     }
 
     /**
@@ -150,7 +150,52 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+            'client_id' => 'required|exists:clients,id',
+            'notes' => 'nullable|string|max:1000',
+
+        ]);
+
+        $invoice->update($validated);
+
+
+        $invoice->lines()->delete();
+
+
+        $client = Client::findOrFail($validated['client_id']);
+        $url = 'https://ical.mathieutu.dev/json?url=' . urlencode($client->ical_url);
+        $response = Http::get($url);
+
+        $startDate = new \DateTime($invoice->start);
+        $endDate = new \DateTime($invoice->end);
+
+        if ($response->successful()) {
+            $events = $response->json();
+
+            foreach ($events['events'] ?? [] as $event) {
+                if (!isset($event['start'], $event['totalHours'])) continue;
+
+                $eventStart = new \DateTime($event['start']);
+
+                if ($eventStart < $startDate || $eventStart > $endDate) {
+                    continue;
+                }
+
+                InvoiceLine::create([
+                    'title' => $event['summary'] ?? 'Prestation',
+                    'description' => $event['description'] ?? '',
+                    'unit_price' => $client->hourly_rate,
+                    'amount' => floatval($event['totalHours']),
+                    'vat_rate' => 20,
+                    'invoice_id' => $invoice->id,
+                ]);
+            }
+        }
+
+        return redirect()->route('invoice.show', $invoice->id)->with('success', 'Facture mise à jour et lignes recalculées avec succès.');
     }
 
     /**
