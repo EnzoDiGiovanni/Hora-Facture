@@ -8,13 +8,13 @@
             <div>
 
                 <a href="{{ route('client.create') }}"
-                    class="transition font-semibold text-sm text-gray-800 dark:text-gray-200  border rounded-lg p-2 hover:bg-black hover:text-gray-300">Créer
-                    un
-                    nouveau
-                    client</a>
+                    class="inline-block bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow transition">
+                    + Nouveau client
+                </a>
                 <a href="{{ route('invoice.create') }}"
-                    class="transition font-semibold text-sm text-gray-800 dark:text-gray-200  border rounded-lg p-2 hover:bg-black hover:text-gray-300">Créer
-                    une nouvelle facture</a>
+                    class="inline-block bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium px-4 py-2 rounded-lg shadow transition">
+                    + Nouvelle facture
+                </a>
 
             </div>
         </div>
