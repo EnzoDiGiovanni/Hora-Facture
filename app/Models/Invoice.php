@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class Invoice extends Model
 {
-    protected $fillable = ['name', 'payments_terms', 'start', 'end', 'user_id', 'client_id'];
+    protected $fillable = ['name', 'start', 'end', 'notes', 'user_id', 'client_id'];
 
     public function lines()
     {
