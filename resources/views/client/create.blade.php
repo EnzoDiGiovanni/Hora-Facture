@@ -51,10 +51,20 @@
 
 
     <div class="flex  justify-between items-center mt-6">
-      <a class="dark:text-gray-300 hover:underline" href="{{ route('dashboard') }}">Retour au dashboard</a>
+      <a href="{{ route('dashboard') }}" class="relative inline-block group text-gray-800 dark:text-white">
+        Retour au dashboard
+        <span
+          class="absolute left-0 -bottom-1 h-0.5 w-full scale-x-0 origin-bottom-right bg-gray-400 transition-transform duration-300 group-hover:scale-x-100 group-hover:origin-bottom-left">
+        </span>
+      </a>
 
-      <button class="dark:text-gray-300 border rounded-md p-2 hover:border-gray-700" type="submit">Créer le
-        client</button>
+
+
+      <button type="submit"
+        class="inline-flex items-center justify-center px-6 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-sm text-white dark:text-gray-800 uppercase tracking-wider hover:bg-gray-700 dark:hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+        Créer le client
+      </button>
+
     </div>
   </form>
 

@@ -1,6 +1,6 @@
 <x-app-layout>
   <x-slot name="header">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between animate-fade-in">
       <h2 class="font-semibold text-2xl text-gray-800 dark:text-white">Liste des clients</h2>
 
       <a href="{{ route('client.create') }}"
@@ -10,13 +10,13 @@
     </div>
   </x-slot>
 
-  <div class="py-12">
+  <div class="py-12 animate-slide-in">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 ">
       <div class="bg-white dark:bg-gray-900 shadow sm:rounded-lg p-6">
         @forelse ($clients as $client)
       <div
         class="mb-6 p-4 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 shadow-sm flex justify-between items-center gap-10">
-        <div class="space-y-1 break-words">
+        <div class="space-y-1 break-words ">
         <p class="text-lg text-gray-900 dark:text-gray-100 font-semibold break-all">{{ $client->bussiness_name }}
         </p>
         <p class="text-sm text-gray-700 dark:text-gray-300 break-all"><strong>Email :</strong> {{ $client->email }}
@@ -25,7 +25,7 @@
           {{ $client->ical_url }}</p>
         </div>
 
-        <div>
+        <div class=" flex gap-4">
 
         <a href="{{ route('client.edit', $client->id) }}"
           class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
@@ -41,7 +41,7 @@
           Supprimer
           </button>
         </form>
-        </form>
+
         </div>
       </div>
     @empty
