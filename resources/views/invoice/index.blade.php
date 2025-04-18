@@ -1,6 +1,6 @@
 <x-app-layout>
   <x-slot name="header">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between animate-fade-in">
       <h2 class="font-semibold text-2xl text-gray-800 dark:text-white">Liste des factures</h2>
 
       <a href="{{ route('invoice.create') }}"
@@ -10,7 +10,7 @@
     </div>
   </x-slot>
 
-  <div class="py-12">
+  <div class="py-12 animate-slide-in">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="bg-white dark:bg-gray-900 shadow sm:rounded-lg p-6">
         @forelse ($invoices as $invoice)
@@ -29,7 +29,7 @@
         </p>
         </div>
 
-        <div>
+        <div class="flex gap-2">
 
         <a href="{{ route('invoice.edit', $invoice->id) }}"
           class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">

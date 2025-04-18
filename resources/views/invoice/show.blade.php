@@ -3,7 +3,8 @@
     <div class="flex items-center justify-between print:hidden">
       <h2 class="font-semibold text-2xl text-gray-800 dark:text-white">Facture : {{ $invoice->name }}</h2>
       <p class="text-sm text-gray-600 dark:text-gray-400">Période facturée : du {{ $invoice->start }} au
-        {{ $invoice->end }}</p>
+        {{ $invoice->end }}
+      </p>
     </div>
   </x-slot>
 
@@ -30,7 +31,8 @@
           <div class="mb-10">
             <h3 class="font-semibold text-2xl text-gray-800 dark:text-white">Facture : {{ $invoice->name }}</h3>
             <p class="text-gray-600 dark:text-gray-400">Période facturée : du {{ $invoice->start }} au
-              {{ $invoice->end }}</p>
+              {{ $invoice->end }}
+            </p>
             <p class="font-semibold text-sm text-gray-800 dark:text-white">
               Facture numéro : {{ $invoice->created_at->format('d-m-Y') }}-{{ $invoice->id }}-{{ $invoice->user->id }}
             </p>
@@ -86,7 +88,7 @@
           </tr>
         @endforeach
               </tbody>
-              <tfoot class="bg-gray-100 dark:bg-gray-700">
+              <tfoot class="bg-gray-100 dark:bg-gray-700 table-row-group">
                 <tr>
                   <td colspan="3" class="px-6 py-3 text-right font-semibold">Total HT</td>
                   <td class="px-6 py-3 text-right font-semibold">{{ number_format($totalHT, 2) }} €</td>
