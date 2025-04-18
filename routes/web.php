@@ -4,7 +4,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceLineController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Client;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,7 +14,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $invoices = Invoice::where('user_id', Auth::id())->get();
+    $clients = Client::where('user_id', Auth::id())->get();
+    return view('dashboard', ['invoices' => $invoices, 'clients' => $clients]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
